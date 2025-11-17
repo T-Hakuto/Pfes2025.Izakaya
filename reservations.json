@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "generated": "2025-11-02T12:00:00+09:00",
+    "note": "日付・時間帯・定員・予約済数を管理します。編集して使ってください。イベント日は 2025-11-21〜2025-11-23 です。"
+  },
+  "days": [
+    {
+      "date": "2025-11-21",
+      "label": "11/21 (金)",
+      "slots": [
+        { "time": "17:00", "capacity": 20, "reserved": 12 },
+        { "time": "19:00", "capacity": 20, "reserved": 20 }
+      ]
+    },
+    {
+      "date": "2025-11-22",
+      "label": "11/22 (土)",
+      "slots": [
+        { "time": "17:00", "capacity": 20, "reserved": 5 },
+        { "time": "19:00", "capacity": 20, "reserved": 8 }
+      ]
+    },
+    {
+      "date": "2025-11-23",
+      "label": "11/23 (日)",
+      "slots": [
+        { "time": "17:00", "capacity": 15, "reserved": 0 },
+        { "time": "19:00", "capacity": 15, "reserved": 15 }
+      ]
+    }
+  ]
+}

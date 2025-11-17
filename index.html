@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>いざかや — 予約状況</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+  </header>
+
+  <main class="container">
+    <section id="owner-message" class="card">
+      <h2>代表から</h2>
+      <div class="owner-message-content">
+        <p class="owner-greeting">刻めき代いざかや代表のさほです！</p>
+        <p class="owner-text">学部生とOBOGが同じ場で、一緒にお酒とごはんを楽しむいざかやの空間が大好きです♡<br>今年も素敵な空間を作り上げるのでぜひ遊びにきてください～🥰🥰</p>
+      </div>
+      <div class="owner-message-content">
+        <p class="owner-greeting">刻めき代いざかや代表の織音です！</p>
+        <p class="owner-text">今年もたくさん美味しいご飯とお酒をいっぱい用意しています💞(他にもいろんなイベントを予定しています✨)<br>超楽しませますので、みなさんぜひぜひいらっしゃってください～🌷</p>
+      </div>
+    </section>
+
+    <section id="reservation-status" class="card">
+      <h2>空き状況</h2>
+      <div id="status-list">読み込み中…</div>
+      <div id="debug-info" style="font-size:0.9rem;color:#666;margin-top:8px"></div>
+      <div class="actions">
+        <a id="reserve-link" class="btn primary" href="#">予約フォームへ（外部）</a>
+      </div>
+    </section>
+
+    <section id="menu" class="card">
+      <h2>メニュー</h2>
+      <div class="slideshow-container">
+        <div class="slide">
+          <img class="hero-img" src="images/picture1.png" alt="メニュー写真1">
+        </div>
+        <div class="slide">
+          <img class="hero-img" src="images/picture4.png" alt="メニュー写真4">
+        </div>
+        <div class="slide">
+          <img class="hero-img" src="images/picture5.png" alt="メニュー写真5">
+        </div>
+        <div class="slide">
+          <img class="hero-img" src="images/pisture3.png" alt="メニュー写真3">
+        </div>
+      </div>
+      <div class="actions">
+        <a id="menu-link" class="btn primary" href="menu.html">メニュー一覧</a>
+      </div>
+      <ul id="menu-list">
+      </ul>
+      <div class="actions">
+        <a class="btn" href="menu.html#food-menu">フード</a>
+        <a class="btn" href="menu.html#drink-menu">ドリンク</a>
+      </div>
+    </section>
+    <script>
+      let slideIndex = 0;
+      const slides = document.querySelectorAll('.slide');
+
+      function showSlides() {
+        slides.forEach((slide, index) => {
+          slide.style.display = index === slideIndex ? 'block' : 'none';
+        });
+        slideIndex = (slideIndex + 1) % slides.length;
+        setTimeout(showSlides, 3000);
+      }
+
+      showSlides();
+
+      // 予約表の折りたたみ機能
+      document.addEventListener('DOMContentLoaded', function() {
+        const collapsibles = document.querySelectorAll('.sheet-day-title.collapsible');
+        collapsibles.forEach(function(title) {
+          title.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + 'px';
+            }
+          });
+        });
+      });
+    </script>
+
+    <section id="live-sheets" class="card">
+      <h2>リアルタイム予約表</h2>
+      <p>空きは〇、予約済みは✕で表示されます</p>
+      <div class="sheet-day-wrapper">
+        <h3 class="sheet-day-title collapsible">1日目（11月21日）</h3>
+        <div class="sheet-day-content">
+          <div id="sheet-day1" style="margin-top:8px">読み込み中（1日目）…</div>
+        </div>
+      </div>
+      <div class="sheet-day-wrapper">
+        <h3 class="sheet-day-title collapsible">2日目（11月22日）</h3>
+        <div class="sheet-day-content">
+          <div id="sheet-day2" style="margin-top:8px">読み込み中（2日目）…</div>
+        </div>
+      </div>
+      <div class="sheet-day-wrapper">
+        <h3 class="sheet-day-title collapsible">3日目（11月23日）</h3>
+        <div class="sheet-day-content">
+          <div id="sheet-day3" style="margin-top:8px">読み込み中（3日目）…</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="theme" class="card">
+      <h2>テーマ</h2>
+      <div class="theme-content">
+        <h3 class="theme-title">食の探検</h3>
+        <p class="theme-description">みんなの食べたいもの、作りたいもの、気になっているもの全てを作りたいです！<br>自由でハッピーないざかやを作りましょう！！</p>
+      </div>
+    </section>
+
+    <section id="feature" class="card">
+      <h2>今年のポイント！</h2>
+      <div class="feature-content">
+        <ul class="feature-list">
+          <li class="feature-item">毎日何かのイベントを開催します🌟</li>
+          <li class="feature-item">洋食から和食まで色々なお料理が勢揃いです🍚</li>
+          <li class="feature-item">いざかや装飾にも大注目👀</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="message" class="card">
+      <h2>メッセージ</h2>
+      <div class="message-bubbles">
+        <div class="bubble">
+          <p class="bubble-body">丹精こめて作ります！！<br>是非来てください</p>
+          <div class="bubble-footer">by とまと</div>
+        </div>
+        <div class="bubble">
+          <p class="bubble-body">先輩方に会えるの楽しみにしてます！！<br>是非お越しください</p>
+          <div class="bubble-footer">by うみーん</div>
+        </div>
+        <div class="bubble">
+          <p class="bubble-body">満腹・笑顔にして返します！！<br>きてねー</p>
+          <div class="bubble-footer">by うし</div>
+        </div>
+        <div class="bubble">
+          <p class="bubble-body">みんなで楽しい時間を共有して、最高の３日間にしましょう！</p>
+          <div class="bubble-footer">by スタッフ一同</div>
+        </div>
+        <div class="bubble placeholder">
+          <p class="bubble-body">メッセージを追加してください。<br>（最大10件まで表示できます）</p>
+          <div class="bubble-footer">by ???</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>開催日：2025年11月21日〜11月23日</p>
+    <p>場所：京都大学教育学部棟　https://maps.app.goo.gl/PPgjz25TpmiHNQwy8</a></p>
+    <p>🄫Hakuto Tanaka</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

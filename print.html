@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>印刷用メニュー</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* 印刷用に余計な要素を隠す */
+    @media print{
+      body{background:white;color:#000}
+      .no-print{display:none}
+    }
+    .menu-grid{display:block}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>メニュー（印刷用）</h1>
+      <div>
+        <h2>おすすめ</h2>
+        <ul>
+          <li>だし巻き玉子 — ふわふわのだし巻き</li>
+          <li>牛すじ煮込み — とろとろに煮込んだ自家製</li>
+          <li>焼き鳥盛り合わせ — 塩・タレ両方</li>
+          <li>旬の刺身盛り — 日替わりで新鮮</li>
+        </ul>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn primary no-print" onclick="window.print()">このページを印刷</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

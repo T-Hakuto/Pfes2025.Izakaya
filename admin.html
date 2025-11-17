@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>管理画面 — 予約編集</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .field{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+    label{width:80px}
+    input[type=number]{width:80px}
+    .save{margin-top:12px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><h1>管理画面</h1></header>
+  <main class="container">
+    <section class="card">
+      <h2>予約データ編集</h2>
+      <p>管理パスワードを入力してください（ヘッダ x-admin-password に送信されます）。</p>
+      <div>
+        <label>管理パスワード</label>
+        <input id="admin-pass" type="password">
+      </div>
+      <div id="days-root">読み込み中…</div>
+      <div class="save">
+        <button id="save-btn" class="btn primary">保存</button>
+        <span id="status" style="margin-left:8px;color:green"></span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const daysRoot = document.getElementById('days-root');
+    const saveBtn = document.getElementById('save-btn');
+    const statusEl = document.getElementById('status');
+
+    async function load(){
+      const res = await fetch('/api/reservations');
+      const data = await res.json();
+      render(data);
+    }
+
+    function render(data){
+      daysRoot.innerHTML = '';
+      (data.days || []).forEach((day,i)=>{
+        const wrap = document.createElement('div');
+        wrap.style.marginBottom = '12px';
+        const h = document.createElement('h3'); h.textContent = day.label || day.date; wrap.appendChild(h);
+        day.slots.forEach((s,j)=>{
+          const row = document.createElement('div'); row.className='field';
+          const time = document.createElement('div'); time.textContent = s.time; row.appendChild(time);
+          const cap = document.createElement('input'); cap.type='number'; cap.value = s.capacity||0; cap.dataset.path = `${i}.${j}.capacity`; row.appendChild(cap);
+          const resv = document.createElement('input'); resv.type='number'; resv.value = s.reserved||0; resv.dataset.path = `${i}.${j}.reserved`; row.appendChild(resv);
+          wrap.appendChild(row);
+        });
+        daysRoot.appendChild(wrap);
+      });
+      // store data on window for save
+      window._reservationData = data;
+    }
+
+    saveBtn.addEventListener('click', async ()=>{
+      const pass = document.getElementById('admin-pass').value;
+      if(!pass){ alert('管理パスワードを入力してください'); return; }
+      // read inputs
+      document.querySelectorAll('input[type=number]').forEach(inp=>{
+        const [di,sj,field] = inp.dataset.path.split('.');
+        if(window._reservationData && window._reservationData.days && window._reservationData.days[di]){
+          window._reservationData.days[di].slots[sj][field] = Number(inp.value);
+        }
+      });
+
+      const res = await fetch('/api/admin/update', {
+        method: 'POST', headers: {'Content-Type':'application/json', 'x-admin-password': pass},
+        body: JSON.stringify(window._reservationData)
+      });
+      const j = await res.json();
+      if(res.ok){ statusEl.textContent = '保存しました'; setTimeout(()=>statusEl.textContent='',2000);} else { alert(JSON.stringify(j)); }
+    });
+
+    load().catch(e=>{ daysRoot.textContent = '読み込み失敗'; console.error(e)});
+  </script>
+</body>
+</html>

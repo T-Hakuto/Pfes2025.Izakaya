@@ -1,0 +1,13 @@
+{
+  "name": "izakaya-site",
+  "version": "1.0.0",
+  "description": "4日間居酒屋 - 簡易サーバーと管理画面",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
